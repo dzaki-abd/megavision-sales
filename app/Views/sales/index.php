@@ -117,11 +117,22 @@
                     className: 'text-center'
                 },
                 {
-                    data: 'name'
+                    data: 'id_client',
                 },
                 {
-                    data: 'price',
-                    className: 'text-left'
+                    data: 'employee',
+                },
+                {
+                    data: 'item',
+                },
+                {
+                    data: 'order_date',
+                },
+                {
+                    data: 'client_name',
+                },
+                {
+                    data: 'client_contact',
                 },
                 {
                     data: 'action',

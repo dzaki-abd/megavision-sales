@@ -26,12 +26,35 @@ class SalesController extends BaseController
 
             return DataTable::of($data)
                 ->addNumbering('no')
+                ->add('employee', function ($row) {
+                    $employee = new EmployeeModel();
+                    $employeeData = $employee->where('id', $row->id_employee)->first();
+
+                    return $employeeData ? $employeeData['name'] : null;
+                })
+
+                ->add('item', function ($row) {
+                    $item = new ItemModel();
+                    $itemData = $item->where('id', $row->id_item)->first();
+
+                    return $itemData ? $itemData['name'] : null;
+                })
+                ->add('order_date', function ($row) {
+                    $date = date_create($row->order_date);
+
+                    return date_format($date, 'd F Y');
+                })
+                ->add('client_contact', function ($row) {
+                    $contact = $row->client_phone . ' / ' . $row->client_email;
+
+                    return $contact;
+                })
                 ->add('action', function ($row) {
                     $encryptedId = $this->encryption->encrypt($row->id);
                     $urlSafeId = strtr(base64_encode($encryptedId), '+/=', '-_?');
 
                     $btn = '<div class="btn-group" role="group" aria-label="Action">';
-                    $btn .= '<button type="button" class="btn btn-warning btn-sm editButton" data-id="' . $urlSafeId . '" data-name="' . $row->name . '" data-price="' . $row->price . '" title="Edit Data"><i class="fas fa-edit"></i></button>';
+                    $btn .= '<button type="button" class="btn btn-warning btn-sm editButton" data-id="' . $urlSafeId . '" title="Edit Data"><i class="fas fa-edit"></i></button>';
                     $btn .= '<button type="button" class="btn btn-danger btn-sm deleteButton" data-id="' . $urlSafeId . '" title="Delete Data"><i class="fas fa-trash"></i></button>';
                     $btn .= '</div>';
                     return $btn;
