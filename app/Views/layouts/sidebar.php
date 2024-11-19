@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= route_to('/') ?>">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-wifi"></i>
         </div>
@@ -12,10 +12,11 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item <?= (uri_string() == '' ? 'active' : '') ?>">
+        <a class="nav-link" href="<?= route_to('/') ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Dashboard</span>
+        </a>
     </li>
 
     <!-- Divider -->
@@ -27,10 +28,17 @@
     </div>
 
     <!-- Nav Item - Employee -->
-    <li class="nav-item">
-        <a class="nav-link" href="<?= route_to('employee') ?>">
+    <li class="nav-item <?= (uri_string() == 'employee' ? 'active' : '') ?>">
+        <a class=" nav-link" href="<?= route_to('employee') ?>">
             <i class="fas fa-fw fa-users"></i>
             <span>Employee</span></a>
+    </li>
+
+    <!-- Nav Item - Item -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-box"></i>
+            <span>Item</span></a>
     </li>
 
     <!-- Nav Item - Sales -->
