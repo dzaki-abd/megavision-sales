@@ -35,8 +35,8 @@
     </li>
 
     <!-- Nav Item - Item -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
+    <li class="nav-item <?= (uri_string() == 'item' ? 'active' : '') ?>">
+        <a class="nav-link" href="<?= route_to('item') ?>">
             <i class="fas fa-fw fa-box"></i>
             <span>Item</span></a>
     </li>

@@ -38,7 +38,9 @@ class EmployeeController extends BaseController
                 })
                 ->toJson(true);
         } else {
-            return view('employee/index');
+            $title = 'Employee';
+
+            return view('employee/index', compact('title'));
         }
     }
 
