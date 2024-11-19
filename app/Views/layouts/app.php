@@ -21,6 +21,16 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap4.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
+    <style>
+        .req:after {
+            content: " *";
+            color: red;
+        }
+    </style>
 
 </head>
 
@@ -96,6 +106,40 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/js/sb-admin-2.min.js') ?>"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+
+            <?php if (session()->getFlashdata('success')) : ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '<?= session()->getFlashdata('success') ?>',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    timerProgressBar: true
+                });
+            <?php endif; ?>
+
+            <?php if (session()->getFlashdata('errors')) : ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '<?= session()->getFlashdata('errors') ?>',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowOutsideClick: false,
+                    timerProgressBar: true
+                });
+            <?php endif; ?>
+        });
+    </script>
 
     <?= $this->renderSection('scripts') ?>
 </body>

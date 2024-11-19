@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Employee -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="<?= route_to('employee') ?>">
             <i class="fas fa-fw fa-users"></i>
             <span>Employee</span></a>
     </li>
