@@ -11,7 +11,7 @@
     <meta name="<?= csrf_token() ?>" content="<?= csrf_hash() ?>">
     <link rel="icon" href="<?= base_url('assets/img/undraw_rocket.svg') ?>">
 
-    <title>Megavision Sales - <?= isset($title) ? $title : 'Dashboard' ?></title>
+    <title><?= isset($title) ? $title : 'Dashboard' ?> | Megavision Sales</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
