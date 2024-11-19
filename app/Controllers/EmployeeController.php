@@ -22,12 +22,12 @@ class EmployeeController extends BaseController
         if ($this->request->isAJAX()) {
             $data = new EmployeeModel();
 
-            $data->select('id_employee, name, email, phone, office');
+            $data->select('number, name, email, phone, office');
 
             return DataTable::of($data)
                 ->addNumbering('no')
                 ->add('action', function ($row) {
-                    $encryptedId = $this->encryption->encrypt($row->id_employee);
+                    $encryptedId = $this->encryption->encrypt($row->number);
                     $urlSafeId = strtr(base64_encode($encryptedId), '+/=', '-_?');
 
                     $btn = '<div class="btn-group" role="group" aria-label="Action">';
@@ -47,7 +47,7 @@ class EmployeeController extends BaseController
     public function store()
     {
         $rules = [
-            'id_employee' => 'required|is_unique[employees.id_employee]',
+            'number' => 'required|is_unique[employees.number]',
             'name' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required',
@@ -61,7 +61,7 @@ class EmployeeController extends BaseController
         }
 
         $data = [
-            'id_employee' => $this->request->getPost('id_employee'),
+            'number' => $this->request->getPost('number'),
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
@@ -86,8 +86,8 @@ class EmployeeController extends BaseController
         }
 
         $employeeModel = new EmployeeModel();
-        $employee = $employeeModel->select('id_employee, name, email, phone, office')
-            ->where('id_employee', $id)
+        $employee = $employeeModel->select('number, name, email, phone, office')
+            ->where('number', $id)
             ->first();
 
         if (!$employee) {
@@ -109,7 +109,7 @@ class EmployeeController extends BaseController
         }
 
         $rules = [
-            'id_employee' => 'required|is_unique[employees.id_employee,id_employee,' . $id . ']',
+            'number' => 'required|is_unique[employees.number,number,' . $id . ']',
             'name' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required',
@@ -123,7 +123,7 @@ class EmployeeController extends BaseController
         }
 
         $data = [
-            'id_employee' => $this->request->getPost('id_employee'),
+            'number' => $this->request->getPost('number'),
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
@@ -131,7 +131,7 @@ class EmployeeController extends BaseController
         ];
 
         $model = new EmployeeModel();
-        $model->where('id_employee', $id)->set($data)->update();
+        $model->where('number', $id)->set($data)->update();
 
         return redirect()->to(site_url('employee'))->with('success', 'Data has been updated');
     }
@@ -148,7 +148,7 @@ class EmployeeController extends BaseController
         }
 
         $model = new EmployeeModel();
-        $model->where('id_employee', $id)->delete();
+        $model->where('number', $id)->delete();
 
         return $this->response->setJSON(['success' => 'Data has been deleted']);
     }

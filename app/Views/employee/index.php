@@ -48,8 +48,8 @@
             <form action="<?= site_url('employee/store') ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="id_employee" class="req">Employee ID</label>
-                        <input type="text" class="form-control" id="id_employee" name="id_employee" placeholder="ex. S001" required>
+                        <label for="number" class="req">Employee ID</label>
+                        <input type="text" class="form-control" id="number" name="number" placeholder="ex. S001" required>
                     </div>
                     <div class="form-group">
                         <label for="name" class="req">Name</label>
@@ -97,8 +97,8 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="id_employee" class="req">Employee ID</label>
-                        <input type="text" class="form-control" id="id_employee" name="id_employee" placeholder="ex. S001" required>
+                        <label for="number" class="req">Employee ID</label>
+                        <input type="text" class="form-control" id="number" name="number" placeholder="ex. S001" required>
                     </div>
                     <div class="form-group">
                         <label for="name" class="req">Name</label>
@@ -152,7 +152,7 @@
                     className: 'text-center'
                 },
                 {
-                    data: 'id_employee'
+                    data: 'number'
                 },
                 {
                     data: 'name'
@@ -210,7 +210,7 @@
                         return;
                     }
                     $('#editModal form').attr('action', url);
-                    $('#editModal #id_employee').val(data.id_employee);
+                    $('#editModal #number').val(data.number);
                     $('#editModal #name').val(data.name);
                     $('#editModal #email').val(data.email);
                     $('#editModal #phone').val(data.phone);

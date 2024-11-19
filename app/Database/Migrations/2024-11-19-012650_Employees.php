@@ -20,7 +20,7 @@ class Employees extends Migration
                 'constraint' => 5,
                 'null' => true,
             ],
-            'id_employee' => [
+            'number' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ],

@@ -12,7 +12,7 @@ class EmployeeModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_user', 'id_employee', 'name', 'email', 'phone', 'office', 'created_at', 'updated_at'];
+    protected $allowedFields    = ['id_user', 'number', 'name', 'email', 'phone', 'office', 'created_at', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
