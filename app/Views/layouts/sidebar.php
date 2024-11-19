@@ -42,8 +42,8 @@
     </li>
 
     <!-- Nav Item - Sales -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+    <li class="nav-item <?= (uri_string() == 'sales' ? 'active' : '') ?>">
+        <a class="nav-link" href="<?= route_to('sales') ?>">
             <i class="fas fa-fw fa-hand-holding-usd"></i>
             <span>Sales</span></a>
     </li>

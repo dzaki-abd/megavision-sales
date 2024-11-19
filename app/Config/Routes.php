@@ -9,7 +9,6 @@ $routes->get('/', 'Home::index');
 
 $routes->group('employee', function ($routes) {
     $routes->get('/', 'EmployeeController::index');
-    // $routes->get('create', 'EmployeeController::create');
     $routes->post('store', 'EmployeeController::store');
     $routes->get('edit/(:segment)', 'EmployeeController::edit/$1');
     $routes->post('update/(:segment)', 'EmployeeController::update/$1');
@@ -22,4 +21,12 @@ $routes->group('item', function ($routes) {
     $routes->get('edit/(:segment)', 'ItemController::edit/$1');
     $routes->post('update/(:segment)', 'ItemController::update/$1');
     $routes->get('delete/(:segment)', 'ItemController::delete/$1');
+});
+
+$routes->group('sales', function ($routes) {
+    $routes->get('/', 'SalesController::index');
+    $routes->post('store', 'SalesController::store');
+    $routes->get('edit/(:segment)', 'SalesController::edit/$1');
+    $routes->post('update/(:segment)', 'SalesController::update/$1');
+    $routes->get('delete/(:segment)', 'SalesController::delete/$1');
 });
