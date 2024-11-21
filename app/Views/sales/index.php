@@ -12,6 +12,17 @@
         <h6 class="m-0 font-weight-bold text-primary">Data Sales</h6>
     </div>
     <div class="card-body">
+        <h5><b>Filter :</b></h5>
+        <div class="row col-6">
+            <div class="form-group col">
+                <label for="dateStart">Start Date</label>
+                <input class="form-control" id="dateStart" name="dateStart" placeholder="Click Here" readonly>
+            </div>
+            <div class="form-group col">
+                <label for="dateEnd">End Date</label>
+                <input class="form-control" id="dateEnd" name="dateEnd" placeholder="Click Here" readonly>
+            </div>
+        </div>
         <button type="button" class="btn btn-primary mb-3 float-md-right" data-toggle="modal" data-target="#createModal">
             <i class="fas fa-plus"></i> Create
         </button>
@@ -110,10 +121,18 @@
             responsive: true,
             autoWidth: true,
             order: [],
-            ajax: '<?= site_url('sales') ?>',
+            ajax: {
+                url: '<?= site_url('sales') ?>',
+                type: 'GET',
+                data: function(d) {
+                    d.dateStart = $('#dateStart').val();
+                    d.dateEnd = $('#dateEnd').val();
+                }
+            },
             columns: [{
                     data: 'no',
                     searchable: false,
+                    orderable: false,
                     className: 'text-center'
                 },
                 {
@@ -133,6 +152,7 @@
                 },
                 {
                     data: 'client_contact',
+                    orderable: false,
                 },
                 {
                     data: 'action',
@@ -210,6 +230,24 @@
                     });
                 }
             });
+        });
+
+        $('#dateStart').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: true,
+        });
+
+        $('#dateEnd').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: true,
+        });
+
+        $('#dateStart, #dateEnd').on('change', function() {
+            table.ajax.reload();
         });
     });
 </script>

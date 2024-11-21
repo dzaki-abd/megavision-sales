@@ -22,7 +22,18 @@ class SalesController extends BaseController
     public function index()
     {
         if ($this->request->isAJAX()) {
+            $dateStart = $this->request->getGet('dateStart');
+            $dateEnd = $this->request->getGet('dateEnd');
             $data = new SalesModel();
+
+            if ($dateStart && $dateEnd) {
+                $data = $data->where('order_date >=', $dateStart)
+                    ->where('order_date <=', $dateEnd);
+            } elseif ($dateStart) {
+                $data = $data->where('order_date >=', $dateStart);
+            } elseif ($dateEnd) {
+                $data = $data->where('order_date <=', $dateEnd);
+            }
 
             return DataTable::of($data)
                 ->addNumbering('no')
@@ -32,7 +43,6 @@ class SalesController extends BaseController
 
                     return $employeeData ? $employeeData['name'] : null;
                 })
-
                 ->add('item', function ($row) {
                     $item = new ItemModel();
                     $itemData = $item->where('id', $row->id_item)->first();
