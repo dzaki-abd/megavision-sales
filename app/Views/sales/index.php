@@ -36,7 +36,8 @@
                         <th>Item</th>
                         <th>Order Date</th>
                         <th>Name</th>
-                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Phone</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -140,9 +141,11 @@
                 },
                 {
                     data: 'employee',
+                    name: 'id_employee',
                 },
                 {
                     data: 'item',
+                    name: 'id_item',
                 },
                 {
                     data: 'order_date',
@@ -151,8 +154,10 @@
                     data: 'client_name',
                 },
                 {
-                    data: 'client_contact',
-                    orderable: false,
+                    data: 'client_email',
+                },
+                {
+                    data: 'client_phone',
                 },
                 {
                     data: 'action',

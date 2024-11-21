@@ -54,11 +54,6 @@ class SalesController extends BaseController
 
                     return date_format($date, 'd F Y');
                 })
-                ->add('client_contact', function ($row) {
-                    $contact = $row->client_phone . ' / ' . $row->client_email;
-
-                    return $contact;
-                })
                 ->add('action', function ($row) {
                     $encryptedId = $this->encryption->encrypt($row->id);
                     $urlSafeId = strtr(base64_encode($encryptedId), '+/=', '-_?');
