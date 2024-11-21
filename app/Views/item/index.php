@@ -110,6 +110,7 @@
             columns: [{
                     data: 'no',
                     searchable: false,
+                    orderable: false,
                     className: 'text-center'
                 },
                 {
