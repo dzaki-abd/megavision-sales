@@ -15,6 +15,10 @@
         <h5><b>Filter :</b></h5>
         <div class="row col-6">
             <div class="form-group col">
+                <label for="dateSpesific">Spesific Date</label>
+                <input class="form-control" id="dateSpesific" name="dateSpesific" placeholder="Click Here" readonly>
+            </div>
+            <div class="form-group col">
                 <label for="dateStart">Start Date</label>
                 <input class="form-control" id="dateStart" name="dateStart" placeholder="Click Here" readonly>
             </div>
@@ -128,20 +132,23 @@
                 data: function(d) {
                     d.dateStart = $('#dateStart').val();
                     d.dateEnd = $('#dateEnd').val();
+                    d.dateSpesific = $('#dateSpesific').val();
                 }
             },
             columns: [{
                     data: 'no',
+                    name: 'no',
                     searchable: false,
                     orderable: false,
                     className: 'text-center'
                 },
                 {
                     data: 'id_client',
+                    name: 'id_client',
                 },
                 {
                     data: 'employee',
-                    name: 'id_employee',
+                    name: 'employees.name',
                 },
                 {
                     data: 'item',
@@ -149,15 +156,20 @@
                 },
                 {
                     data: 'order_date',
+                    name: 'order_date',
+                    searchable: false,
                 },
                 {
                     data: 'client_name',
+                    name: 'client_name',
                 },
                 {
                     data: 'client_email',
+                    name: 'client_email',
                 },
                 {
                     data: 'client_phone',
+                    name: 'client_phone',
                 },
                 {
                     data: 'action',
@@ -251,7 +263,14 @@
             clearBtn: true,
         });
 
-        $('#dateStart, #dateEnd').on('change', function() {
+        $('#dateSpesific').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: true,
+        });
+
+        $('#dateStart, #dateEnd, #dateSpesific').on('change', function() {
             table.ajax.reload();
         });
     });

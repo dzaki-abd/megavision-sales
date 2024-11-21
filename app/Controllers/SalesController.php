@@ -8,6 +8,7 @@ use App\Models\ItemModel;
 use App\Models\SalesModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use DateTime;
 use Hermawan\DataTables\DataTable;
 
 class SalesController extends BaseController
@@ -22,37 +23,51 @@ class SalesController extends BaseController
     public function index()
     {
         if ($this->request->isAJAX()) {
+            $dateSpesific = $this->request->getGet('dateSpesific');
             $dateStart = $this->request->getGet('dateStart');
             $dateEnd = $this->request->getGet('dateEnd');
             $data = new SalesModel();
 
-            if ($dateStart && $dateEnd) {
-                $data = $data->where('order_date >=', $dateStart)
-                    ->where('order_date <=', $dateEnd);
-            } elseif ($dateStart) {
-                $data = $data->where('order_date >=', $dateStart);
-            } elseif ($dateEnd) {
-                $data = $data->where('order_date <=', $dateEnd);
+            $data = $data->select('sales.*, employees.name as employee_name, items.name as item_name')
+                ->join('employees', 'employees.id = sales.id_employee', 'left')
+                ->join('items', 'items.id = sales.id_item', 'left');
+
+            if ($dateSpesific) {
+                $data = $data->where('order_date', $dateSpesific);
+            } else {
+                if ($dateStart) {
+                    $data = $data->where('order_date >=', $dateStart);
+                }
+
+                if ($dateEnd) {
+                    $data = $data->where('order_date <=', $dateEnd);
+                }
             }
 
             return DataTable::of($data)
                 ->addNumbering('no')
+                ->add('id_client', function ($row) {
+                    return $row->id_client;
+                })
                 ->add('employee', function ($row) {
-                    $employee = new EmployeeModel();
-                    $employeeData = $employee->where('id', $row->id_employee)->first();
-
-                    return $employeeData ? $employeeData['name'] : null;
+                    return $row->employee_name;
                 })
                 ->add('item', function ($row) {
-                    $item = new ItemModel();
-                    $itemData = $item->where('id', $row->id_item)->first();
-
-                    return $itemData ? $itemData['name'] : null;
+                    return $row->item_name;
                 })
                 ->add('order_date', function ($row) {
                     $date = date_create($row->order_date);
 
                     return date_format($date, 'd F Y');
+                })
+                ->add('client_name', function ($row) {
+                    return $row->client_name;
+                })
+                ->add('client_email', function ($row) {
+                    return $row->client_email;
+                })
+                ->add('client_phone', function ($row) {
+                    return $row->client_phone;
                 })
                 ->add('action', function ($row) {
                     $encryptedId = $this->encryption->encrypt($row->id);
