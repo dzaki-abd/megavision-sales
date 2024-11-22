@@ -21,6 +21,7 @@ class ItemController extends BaseController
     {
         if ($this->request->isAJAX()) {
             $data = new ItemModel();
+            $data->where('active', 1);
 
             return DataTable::of($data)
                 ->addNumbering('no')
@@ -45,7 +46,7 @@ class ItemController extends BaseController
     public function store()
     {
         $rules = [
-            'name' => 'required|is_unique[items.name]',
+            'name' => 'required|is_unique[items.name,active,0]',
             'price' => 'required'
         ];
 
@@ -57,7 +58,9 @@ class ItemController extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'price' => $this->request->getPost('price')
+            'price' => $this->request->getPost('price'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         $model = new ItemModel();
@@ -78,7 +81,7 @@ class ItemController extends BaseController
         }
 
         $rules = [
-            'name' => 'required|is_unique[items.name,id,' . $id . ']',
+            'name' => 'required|is_unique[items.name,active,0]',
             'price' => 'required'
         ];
 
@@ -90,7 +93,8 @@ class ItemController extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'price' => $this->request->getPost('price')
+            'price' => $this->request->getPost('price'),
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         $model = new ItemModel();
@@ -110,8 +114,13 @@ class ItemController extends BaseController
             return $this->response->setJSON(['error' => 'Invalid ID']);
         }
 
+        $data = [
+            'active' => 0,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
         $model = new ItemModel();
-        $model->delete($id);
+        $model->update($id, $data);
 
         return $this->response->setJSON(['success' => 'Data has been deleted']);
     }

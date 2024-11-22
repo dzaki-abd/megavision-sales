@@ -18,7 +18,6 @@ class Items extends Migration
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'unique' => true,
             ],
             'price' => [
                 'type' => 'INT',
