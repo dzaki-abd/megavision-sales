@@ -91,4 +91,21 @@ class SalesController extends BaseController
             return view('sales/index', compact('title', 'data'));
         }
     }
+
+    public function delete($urlSafeId)
+    {
+        $base64Id = strtr($urlSafeId, '-_=', '+/?');
+        $decodedId = base64_decode($base64Id);
+
+        $id = $this->encryption->decrypt($decodedId);
+
+        if ($id === false) {
+            return $this->response->setJSON(['error' => 'Invalid ID']);
+        }
+
+        $model = new SalesModel();
+        $model->delete($id);
+
+        return $this->response->setJSON(['success' => 'Data has been deleted']);
+    }
 }
