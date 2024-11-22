@@ -12,7 +12,7 @@ class SalesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_client', 'id_employee', 'id_item', 'order_date', 'client_name', 'client_email', 'client_phone', 'created_at', 'updated_at'];
+    protected $allowedFields    = ['id_client', 'id_employee', 'id_item', 'order_date', 'client_name', 'client_email', 'client_phone', 'active', 'created_at', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

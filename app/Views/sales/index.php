@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
         <h5><b>Filter :</b></h5>
-        <div class="row col-6">
+        <div class="row col-md-6 col-sm-12">
             <div class="form-group col">
                 <label for="dateSpesific">Spesific Date</label>
                 <input class="form-control" id="dateSpesific" name="dateSpesific" placeholder="Click Here" readonly>
@@ -64,14 +64,54 @@
             </div>
             <form action="<?= site_url('sales/store') ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <!-- <div class="form-group">
-                        <label for="name" class="req">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="ex. Item A" required>
+                    <div class="form-group">
+                        <label for="employee" class="req">Employee</label>
+                        <select name="employee" id="employee" required class="form-control">
+                            <option></option>
+                            <?php foreach ($data['employee'] as $employee) : ?>
+                                <option value="<?= $employee['number'] ?>"><?= $employee['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="item" class="req">Item</label>
+                            <select name="item" id="item" required class="form-control">
+                                <option></option>
+                                <?php foreach ($data['item'] as $item) : ?>
+                                    <option value="<?= $item['name'] ?>"><?= $item['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="price" class="req">Item Price</label>
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="price" class="req">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="ex. 1000" required>
-                    </div> -->
+                        <label for="order_date" class="req">Order Date</label>
+                        <input class="form-control" id="order_date" name="order_date" placeholder="Click Here" readonly required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="client" class="req">Client ID</label>
+                            <input type="text" class="form-control" id="client" name="client" placeholder="ex. C00001" required>
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="client_name" class="req">Client Name</label>
+                            <input type="text" class="form-control" id="client_name" name="client_name" placeholder="ex. John Doe" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="client_email" class="req">Client Email</label>
+                            <input type="email" class="form-control" id="client_email" name="client_email" placeholder="ex. john.doe@gmail.com" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="client_phone" class="req">Client Phone</label>
+                            <input type="text" class="form-control" id="client_phone" name="client_phone" placeholder="ex. +62 812-3456-789" required>
+                        </div>
+                    </div>
                     <p style="font-style: italic; font-size:small;"><span class="req"></span> required</p>
                 </div>
                 <div class="modal-footer">
@@ -94,17 +134,57 @@
                 </button>
             </div>
             <form action="" method="POST" enctype="multipart/form-data">
-                <!-- <div class="modal-body">
+                <div class="modal-body">
                     <div class="form-group">
-                        <label for="name" class="req">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="ex. Item A" required>
+                        <label for="employee" class="req">Employee</label>
+                        <select name="employee" id="employee" required class="form-control">
+                            <option></option>
+                            <?php foreach ($data['employee'] as $employee) : ?>
+                                <option value="<?= $employee['number'] ?>"><?= $employee['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="item" class="req">Item</label>
+                            <select name="item" id="item" required class="form-control">
+                                <option></option>
+                                <?php foreach ($data['item'] as $item) : ?>
+                                    <option value="<?= $item['name'] ?>"><?= $item['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label for="price" class="req">Item Price</label>
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="price" class="req">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="ex. 1000" required>
+                        <label for="order_date" class="req">Order Date</label>
+                        <input class="form-control" id="order_date" name="order_date" placeholder="Click Here" readonly required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="client" class="req">Client ID</label>
+                            <input type="text" class="form-control" id="client" name="client" placeholder="ex. C00001" required>
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="client_name" class="req">Client Name</label>
+                            <input type="text" class="form-control" id="client_name" name="client_name" placeholder="ex. John Doe" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="client_email" class="req">Client Email</label>
+                            <input type="email" class="form-control" id="client_email" name="client_email" placeholder="ex. john.doe@gmail.com" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="client_phone" class="req">Client Phone</label>
+                            <input type="text" class="form-control" id="client_phone" name="client_phone" placeholder="ex. +62 812-3456-789" required>
+                        </div>
                     </div>
                     <p style="font-style: italic; font-size:small;"><span class="req"></span> required</p>
-                </div> -->
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -182,14 +262,47 @@
 
         table.on('click', '.editButton', function() {
             var id = $(this).data('id');
-            var name = $(this).data('name');
-            var price = $(this).data('price');
-            var url = '<?= site_url('sales/update') ?>/' + id;
 
-            $('#editModal form').attr('action', url);
-            $('#editModal #name').val(name);
-            $('#editModal #price').val(price);
-            $('#editModal').modal('show');
+            $.ajax({
+                url: '<?= site_url('sales/edit') ?>/' + id,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            allowOutsideClick: false,
+                            timerProgressBar: true
+                        });
+                        return;
+                    }
+                    $('#editModal form').attr('action', '<?= site_url('sales/update') ?>/' + id);
+                    $('#editModal #employee').val(data.employee.number).trigger('change');
+                    $('#editModal #item').val(data.item.name).trigger('change');
+                    $('#editModal #price').val(data.item.price);
+                    $('#editModal #order_date').val(data.order_date);
+                    $('#editModal #client').val(data.id_client);
+                    $('#editModal #client_name').val(data.client_name);
+                    $('#editModal #client_email').val(data.client_email);
+                    $('#editModal #client_phone').val(data.client_phone);
+                    $('#editModal').modal('show');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        allowOutsideClick: false,
+                        timerProgressBar: true
+                    });
+                }
+            });
         });
 
         table.on('click', '.deleteButton', function() {
@@ -272,6 +385,57 @@
         $('#dateStart, #dateEnd, #dateSpesific').on('change', function() {
             table.ajax.reload();
         });
+
+        function initSelect2(atrb, modal, text) {
+            $(atrb).select2({
+                theme: 'bootstrap4',
+                placeholder: 'Choose ' + text,
+                allowClear: true,
+                dropdownParent: $(modal)
+            });
+        }
+
+        $('#createModal').on('shown.bs.modal', function() {
+            initSelect2('#createModal #employee', '#createModal', 'Employee');
+            initSelect2('#createModal #item', '#createModal', 'Item');
+        });
+
+        $('#editModal').on('shown.bs.modal', function() {
+            initSelect2('#editModal #employee', '#editModal', 'Employee');
+            initSelect2('#editModal #item', '#editModal', 'Item');
+        });
+
+        $('#item').on('change', function() {
+            var item = $(this).val();
+            var price = <?= json_encode($data['item']) ?>;
+            price.forEach(function(data) {
+                if (data.name == item) {
+                    $('#price').val(data.price);
+                }
+            });
+        });
+
+        $('#editModal #item').on('change', function() {
+            var item = $(this).val();
+            var price = <?= json_encode($data['item']) ?>;
+            price.forEach(function(data) {
+                if (data.name == item) {
+                    $('#editModal #price').val(data.price);
+                }
+            });
+        });
+
+        function initDatePicker(atrb) {
+            $(atrb).datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                clearBtn: true,
+                todayBtn: 'linked',
+            });
+        }
+
+        initDatePicker('#order_date');
+        initDatePicker('#editModal #order_date');
     });
 </script>
 

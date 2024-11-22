@@ -18,7 +18,6 @@ class Sales extends Migration
             'id_client' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'unique' => true,
             ],
             'id_employee' => [
                 'type' => 'INT',
