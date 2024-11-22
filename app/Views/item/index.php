@@ -50,7 +50,12 @@
                     </div>
                     <div class="form-group">
                         <label for="price" class="req">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="ex. 1000" required>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="ex. 100.000" required>
+                        </div>
                     </div>
                     <p style="font-style: italic; font-size:small;"><span class="req"></span> required</p>
                 </div>
@@ -81,7 +86,12 @@
                     </div>
                     <div class="form-group">
                         <label for="price" class="req">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="ex. 1000" required>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="ex. 100.000" required>
+                        </div>
                     </div>
                     <p style="font-style: italic; font-size:small;"><span class="req"></span> required</p>
                 </div>
@@ -196,6 +206,15 @@
                 }
             });
         });
+
+        function initMask(atrb) {
+            $(atrb + ' #price').mask('000.000.000.000.000', {
+                reverse: true
+            });
+        }
+
+        initMask('#createModal');
+        initMask('#editModal');
     });
 </script>
 

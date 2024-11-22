@@ -56,9 +56,11 @@ class ItemController extends BaseController
             return redirect()->to(site_url('item'))->with('errors', $errors);
         }
 
+        $price = str_replace('.', '', $this->request->getPost('price'));
+
         $data = [
             'name' => $this->request->getPost('name'),
-            'price' => $this->request->getPost('price'),
+            'price' => $price,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ];
@@ -91,9 +93,11 @@ class ItemController extends BaseController
             return redirect()->to(site_url('item'))->with('errors', $errors);
         }
 
+        $price = str_replace('.', '', $this->request->getPost('price'));
+
         $data = [
             'name' => $this->request->getPost('name'),
-            'price' => $this->request->getPost('price'),
+            'price' => $price,
             'updated_at' => date('Y-m-d H:i:s')
         ];
 

@@ -46,7 +46,6 @@ class EmployeeController extends BaseController
 
     public function store()
     {
-        dd($this->request->getPost());
         $rules = [
             'number' => 'required|is_unique[employees.number,active,0]',
             'name' => 'required',
