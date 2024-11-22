@@ -30,3 +30,10 @@ $routes->group('sales', function ($routes) {
     $routes->post('update/(:segment)', 'SalesController::update/$1');
     $routes->get('delete/(:segment)', 'SalesController::delete/$1');
 });
+
+$routes->group('api/sales', function ($routes) {
+    $routes->get('employee/(:segment)', 'SalesAPIController::getByEmployee/$1');
+    $routes->get('employee/(:segment)/item/(:segment)', 'SalesAPIController::getByEmployeeAndItem/$1/$2');
+});
+
+$routes->resource('api/sales', ['controller' => 'SalesAPIController']);
