@@ -18,10 +18,16 @@ class Items extends Migration
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'unique' => true,
             ],
             'price' => [
                 'type' => 'INT',
                 'constraint' => 11,
+            ],
+            'active' => [
+                'type' => 'INT',
+                'constraint' => 1,
+                'default' => 1,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
