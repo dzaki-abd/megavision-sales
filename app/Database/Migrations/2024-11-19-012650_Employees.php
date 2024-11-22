@@ -23,7 +23,6 @@ class Employees extends Migration
             'number' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'unique' => true,
             ],
             'name' => [
                 'type' => 'VARCHAR',

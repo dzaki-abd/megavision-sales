@@ -22,7 +22,7 @@ class EmployeeController extends BaseController
         if ($this->request->isAJAX()) {
             $data = new EmployeeModel();
 
-            $data->select('number, name, email, phone, office');
+            $data->select('number, name, email, phone, office')->where('active', 1);
 
             return DataTable::of($data)
                 ->addNumbering('no')
@@ -47,7 +47,7 @@ class EmployeeController extends BaseController
     public function store()
     {
         $rules = [
-            'number' => 'required|is_unique[employees.number]',
+            'number' => 'required|is_unique[employees.number,active,0]',
             'name' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required',
@@ -65,7 +65,9 @@ class EmployeeController extends BaseController
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
-            'office' => $this->request->getPost('office')
+            'office' => $this->request->getPost('office'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         $model = new EmployeeModel();
@@ -88,6 +90,7 @@ class EmployeeController extends BaseController
         $employeeModel = new EmployeeModel();
         $employee = $employeeModel->select('number, name, email, phone, office')
             ->where('number', $id)
+            ->where('active', 1)
             ->first();
 
         if (!$employee) {
@@ -127,7 +130,8 @@ class EmployeeController extends BaseController
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
-            'office' => $this->request->getPost('office_edit')
+            'office' => $this->request->getPost('office_edit'),
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         $model = new EmployeeModel();
@@ -147,8 +151,13 @@ class EmployeeController extends BaseController
             return $this->response->setJSON(['error' => 'Invalid ID']);
         }
 
+        $data = [
+            'active' => 0,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
         $model = new EmployeeModel();
-        $model->where('number', $id)->delete();
+        $model->where('number', $id)->set($data)->update();
 
         return $this->response->setJSON(['success' => 'Data has been deleted']);
     }
