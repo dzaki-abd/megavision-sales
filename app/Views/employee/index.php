@@ -287,6 +287,22 @@
                 }
             });
         });
+
+        function initMask(atrb) {
+            $(atrb + ' #number').mask('S000', {
+                translation: {
+                    'S': {
+                        pattern: /[S]/,
+                        fallback: 'S'
+                    }
+                }
+            });
+
+            $(atrb + ' #phone').mask('+62 999-9999-99999');
+        }
+
+        initMask('#createModal');
+        initMask('#editModal');
     });
 </script>
 
