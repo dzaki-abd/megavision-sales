@@ -81,7 +81,7 @@ class ItemController extends BaseController
         }
 
         $rules = [
-            'name' => 'required|is_unique[items.name,active,0]',
+            'name' => 'required|is_unique[items.name,id,' . $id . ']',
             'price' => 'required'
         ];
 
