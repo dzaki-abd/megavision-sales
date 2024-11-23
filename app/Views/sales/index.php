@@ -16,15 +16,15 @@
         <div class="row col-md-6 col-sm-12">
             <div class="form-group col">
                 <label for="dateSpesific">Spesific Date</label>
-                <input class="form-control" id="dateSpesific" name="dateSpesific" placeholder="Click Here" readonly>
+                <input type="date" class="form-control" id="dateSpesific" name="dateSpesific" placeholder="Click Here">
             </div>
             <div class="form-group col">
                 <label for="dateStart">Start Date</label>
-                <input class="form-control" id="dateStart" name="dateStart" placeholder="Click Here" readonly>
+                <input type="date" class="form-control" id="dateStart" name="dateStart" placeholder="Click Here">
             </div>
             <div class="form-group col">
                 <label for="dateEnd">End Date</label>
-                <input class="form-control" id="dateEnd" name="dateEnd" placeholder="Click Here" readonly>
+                <input type="date" class="form-control" id="dateEnd" name="dateEnd" placeholder="Click Here">
             </div>
         </div>
         <button type="button" class="btn btn-primary mb-3 float-md-right" data-toggle="modal" data-target="#createModal">
@@ -85,12 +85,17 @@
                         </div>
                         <div class="form-group col">
                             <label for="price" class="req">Item Price</label>
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp</div>
+                                </div>
+                                <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="order_date" class="req">Order Date</label>
-                        <input class="form-control" id="order_date" name="order_date" placeholder="Click Here" readonly required>
+                        <input type="date" class="form-control" id="order_date" name="order_date" placeholder="Click Here" required>
                     </div>
                     <div class="row">
                         <div class="form-group col-4">
@@ -156,12 +161,17 @@
                         </div>
                         <div class="form-group col">
                             <label for="price" class="req">Item Price</label>
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp</div>
+                                </div>
+                                <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="order_date" class="req">Order Date</label>
-                        <input class="form-control" id="order_date" name="order_date" placeholder="Click Here" readonly required>
+                        <input type="date" class="form-control" id="order_date" name="order_date" placeholder="Click Here" required>
                     </div>
                     <div class="row">
                         <div class="form-group col-4">
@@ -361,27 +371,6 @@
             });
         });
 
-        $('#dateStart').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true,
-            clearBtn: true,
-        });
-
-        $('#dateEnd').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true,
-            clearBtn: true,
-        });
-
-        $('#dateSpesific').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true,
-            clearBtn: true,
-        });
-
         $('#dateStart, #dateEnd, #dateSpesific').on('change', function() {
             table.ajax.reload();
         });
@@ -405,37 +394,36 @@
             initSelect2('#editModal #item', '#editModal', 'Item');
         });
 
-        $('#item').on('change', function() {
-            var item = $(this).val();
-            var price = <?= json_encode($data['item']) ?>;
-            price.forEach(function(data) {
-                if (data.name == item) {
-                    $('#price').val(data.price);
-                }
-            });
-        });
-
-        $('#editModal #item').on('change', function() {
-            var item = $(this).val();
-            var price = <?= json_encode($data['item']) ?>;
-            price.forEach(function(data) {
-                if (data.name == item) {
-                    $('#editModal #price').val(data.price);
-                }
-            });
-        });
-
-        function initDatePicker(atrb) {
-            $(atrb).datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                clearBtn: true,
-                todayBtn: 'linked',
+        function itemChange(atrb) {
+            $(atrb).on('change', function() {
+                var item = $(this).val();
+                var price = <?= json_encode($data['item']) ?>;
+                price.forEach(function(data) {
+                    if (data.name == item) {
+                        $(atrb).parent().next().find('input').val(data.price);
+                    }
+                });
             });
         }
 
-        initDatePicker('#order_date');
-        initDatePicker('#editModal #order_date');
+        itemChange('#item');
+        itemChange('#editModal #item');
+
+        function initMask(atrb) {
+            $(atrb + ' #client').mask('C00000', {
+                translation: {
+                    'C': {
+                        pattern: /[C]/,
+                        fallback: 'C'
+                    }
+                }
+            });
+
+            $(atrb + ' #client_phone').mask('+62 999-9999-99999');
+        }
+
+        initMask('#createModal');
+        initMask('#editModal');
     });
 </script>
 

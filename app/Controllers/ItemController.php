@@ -25,6 +25,9 @@ class ItemController extends BaseController
 
             return DataTable::of($data)
                 ->addNumbering('no')
+                ->add('price', function ($row) {
+                    return 'Rp ' . number_format($row->price, 0, ',', '.');
+                })
                 ->add('action', function ($row) {
                     $encryptedId = $this->encryption->encrypt($row->id);
                     $urlSafeId = strtr(base64_encode($encryptedId), '+/=', '-_?');
