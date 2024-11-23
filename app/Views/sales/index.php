@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
         <h5><b>Filter :</b></h5>
-        <div class="row col-md-6 col-sm-12">
+        <div class="row col-lg-7 col-md-6 col-sm-12">
             <div class="form-group col">
                 <label for="dateSpesific">Spesific Date</label>
                 <input type="date" class="form-control" id="dateSpesific" name="dateSpesific" placeholder="Click Here">
