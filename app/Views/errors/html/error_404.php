@@ -1,84 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
     <title><?= lang('Errors.pageNotFound') ?></title>
 
     <style>
-        div.logo {
-            height: 200px;
-            width: 155px;
-            display: inline-block;
-            opacity: 0.08;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            margin-left: -73px;
-        }
+        @import url("https://fonts.googleapis.com/css?family=Eczar:800");
+        @import url("https://fonts.googleapis.com/css?family=Poppins:600");
+
         body {
-            height: 100%;
-            background: #fafafa;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
-            font-weight: 300;
+            font-family: "Poppins";
+            height: 100vh;
+            background: #121212;
+            padding: 1em;
+            overflow: hidden;
         }
-        h1 {
-            font-weight: lighter;
-            letter-spacing: normal;
-            font-size: 3rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #222;
-        }
-        .wrap {
-            max-width: 1024px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #fff;
-            text-align: center;
-            border: 1px solid #efefef;
-            border-radius: 0.5rem;
+
+        .background-wrapper {
             position: relative;
+            width: 100%;
+            height: 100%;
+            user-select: none;
+
+            h1 {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+                font-family: "Eczar";
+                font-size: 60vmax;
+                color: #282828;
+                letter-spacing: 0.025em;
+                margin: 0;
+                transition: 750ms ease-in-out;
+            }
         }
-        pre {
-            white-space: normal;
-            margin-top: 1.5rem;
+
+        a {
+            border: 2px solid #555;
+            padding: 0.5em 0.8em;
+            position: fixed;
+            z-index: 1;
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: 150ms;
+
+            svg>polyline {
+                transition: 150ms;
+            }
+
+            &:hover {
+                color: #333;
+                background: #dadada;
+                border-color: transparent;
+
+                svg>polyline {
+                    stroke: #000;
+                }
+
+                +.background-wrapper>h1 {
+                    color: #dadada;
+                }
+            }
         }
-        code {
-            background: #fafafa;
-            border: 1px solid #efefef;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: block;
-        }
+
         p {
-            margin-top: 1.5rem;
-        }
-        .footer {
-            margin-top: 2rem;
-            border-top: 1px solid #efefef;
-            padding: 1em 2em 0 2em;
-            font-size: 85%;
-            color: #999;
-        }
-        a:active,
-        a:link,
-        a:visited {
-            color: #dd4814;
+            color: #dadada;
+            font-size: calc(1em + 3vmin);
+            position: fixed;
+            bottom: 1rem;
+            right: 1.5rem;
+            margin: 0;
+            text-align: right;
+            text-shadow: -1px -1px 0 #121212, 1px 1px 0 #121212, -1px 1px 0 #121212,
+                1px -1px 0 #121212;
+
+            @media screen and (min-width: 340px) {
+                width: 70%;
+            }
+
+            @media screen and (min-width: 560px) {
+                width: 50%;
+            }
+
+            @media screen and (min-width: 940px) {
+                width: 30%;
+            }
+
+            @media screen and (min-width: 1300px) {
+                width: 25%;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="wrap">
-        <h1>404</h1>
 
-        <p>
-            <?php if (ENVIRONMENT !== 'production') : ?>
-                <?= nl2br(esc($message)) ?>
-            <?php else : ?>
-                <?= lang('Errors.sorryCannotFind') ?>
-            <?php endif; ?>
-        </p>
+<body>
+    <a href="<?= route_to('/') ?>">
+        <svg
+            height="0.8em"
+            width="0.8em"
+            viewBox="0 0 2 1"
+            preserveAspectRatio="none">
+            <polyline
+                fill="none"
+                stroke="#777777"
+                stroke-width="0.1"
+                points="0.9,0.1 0.1,0.5 0.9,0.9" />
+        </svg>
+        Home
+    </a>
+    <div class="background-wrapper">
+        <h1 id="visual">404</h1>
     </div>
+    <p>The page you’re looking for does not exist.</p>
+
+    <script>
+        const visual = document.getElementById("visual");
+        const events = ["resize", "load"];
+
+        events.forEach(function(e) {
+            window.addEventListener(e, function() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const ratio = 45 / (width / height);
+                visual.style.transform =
+                    "translate(-50%, -50%) rotate(-" + ratio + "deg)";
+            });
+        });
+    </script>
 </body>
+
 </html>
