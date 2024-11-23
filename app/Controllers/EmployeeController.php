@@ -47,7 +47,7 @@ class EmployeeController extends BaseController
     public function store()
     {
         $rules = [
-            'number' => 'required|is_unique[employees.number,active,0]',
+            'number' => 'required',
             'name' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required',
@@ -58,6 +58,13 @@ class EmployeeController extends BaseController
             $errors = $this->validator->getErrors();
             $errors = implode(',', $errors);
             return redirect()->to(site_url('employee'))->with('errors', $errors);
+        }
+
+        $checkNumber = new EmployeeModel();
+        $checkNumber->select('number')->where('number', $this->request->getPost('number'))->where('active', 1);
+        $checkNumber = $checkNumber->first();
+        if ($checkNumber) {
+            return redirect()->to(site_url('employee'))->with('errors', 'Employee ID already exists');
         }
 
         $data = [
@@ -112,7 +119,7 @@ class EmployeeController extends BaseController
         }
 
         $rules = [
-            'number' => 'required|is_unique[employees.number,number,' . $id . ']',
+            'number' => 'required',
             'name' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required',
@@ -123,6 +130,15 @@ class EmployeeController extends BaseController
             $errors = $this->validator->getErrors();
             $errors = implode(',', $errors);
             return redirect()->to(site_url('employee'))->with('errors', $errors);
+        }
+
+        if ($this->request->getPost('number') != $id) {
+            $checkNumber = new EmployeeModel();
+            $checkNumber->where('number', $this->request->getPost('number'))->where('active', 1);
+            $checkNumber = $checkNumber->first();
+            if ($checkNumber) {
+                return redirect()->to(site_url('employee'))->with('errors', 'Employee ID already exists');
+            }
         }
 
         $data = [

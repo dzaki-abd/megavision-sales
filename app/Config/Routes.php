@@ -26,7 +26,7 @@ $routes->group('item', function ($routes) {
 $routes->group('sales', function ($routes) {
     $routes->get('/', 'SalesController::index');
     $routes->post('store', 'SalesController::store');
-    $routes->get('edit/(:segment)', 'SalesController::edit/$1');
+    $routes->get('edit', 'SalesController::edit');
     $routes->post('update/(:segment)', 'SalesController::update/$1');
     $routes->get('delete/(:segment)', 'SalesController::delete/$1');
 });

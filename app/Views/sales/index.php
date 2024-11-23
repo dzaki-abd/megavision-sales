@@ -141,31 +141,21 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="employee" class="req">Employee</label>
-                        <select name="employee" id="employee" required class="form-control">
-                            <option></option>
-                            <?php foreach ($data['employee'] as $employee) : ?>
-                                <option value="<?= $employee['number'] ?>"><?= $employee['name'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label for="employee">Employee</label>
+                        <input type="text" name="employee" id="employee" class="form-control" readonly>
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <label for="item" class="req">Item</label>
-                            <select name="item" id="item" required class="form-control">
-                                <option></option>
-                                <?php foreach ($data['item'] as $item) : ?>
-                                    <option value="<?= $item['name'] ?>"><?= $item['name'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="item">Item</label>
+                            <input type="text" name="item" id="item" class="form-control" readonly>
                         </div>
                         <div class="form-group col">
-                            <label for="price" class="req">Item Price</label>
+                            <label for="price">Item Price</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Rp</div>
                                 </div>
-                                <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly required>
+                                <input type="number" class="form-control" id="price" name="price" placeholder="Choose Item First" readonly>
                             </div>
                         </div>
                     </div>
@@ -274,9 +264,12 @@
             var id = $(this).data('id');
 
             $.ajax({
-                url: '<?= site_url('sales/edit') ?>/' + id,
+                url: '<?= site_url('sales/edit') ?>',
                 type: 'GET',
                 dataType: 'JSON',
+                data: {
+                    id: id
+                },
                 success: function(data) {
                     if (data.error) {
                         Swal.fire({
@@ -291,8 +284,8 @@
                         return;
                     }
                     $('#editModal form').attr('action', '<?= site_url('sales/update') ?>/' + id);
-                    $('#editModal #employee').val(data.employee.number).trigger('change');
-                    $('#editModal #item').val(data.item.name).trigger('change');
+                    $('#editModal #employee').val(data.employee.name);
+                    $('#editModal #item').val(data.item.name);
                     $('#editModal #price').val(data.item.price);
                     $('#editModal #order_date').val(data.order_date);
                     $('#editModal #client').val(data.id_client);
@@ -389,10 +382,10 @@
             initSelect2('#createModal #item', '#createModal', 'Item');
         });
 
-        $('#editModal').on('shown.bs.modal', function() {
-            initSelect2('#editModal #employee', '#editModal', 'Employee');
-            initSelect2('#editModal #item', '#editModal', 'Item');
-        });
+        // $('#editModal').on('shown.bs.modal', function() {
+        //     initSelect2('#editModal #employee', '#editModal', 'Employee');
+        //     initSelect2('#editModal #item', '#editModal', 'Item');
+        // });
 
         function itemChange(atrb) {
             $(atrb).on('change', function() {

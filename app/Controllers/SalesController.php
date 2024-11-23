@@ -74,12 +74,6 @@ class SalesController extends BaseController
                     $encryptedId = $this->encryption->encrypt($row->id);
                     $urlSafeId = strtr(base64_encode($encryptedId), '+/=', '-_?');
 
-                    $employee = new EmployeeModel();
-                    $employee->select('number')->where('id', $row->id_employee)->where('active', 1)->first();
-
-                    $item = new ItemModel();
-                    $item->select('name')->where('id', $row->id_item)->where('active', 1)->first();
-
                     $btn = '<div class="btn-group" role="group" aria-label="Action">';
                     $btn .= '<button type="button" class="btn btn-warning btn-sm editButton" data-id="' . $urlSafeId . '" title="Edit Data"><i class="fas fa-edit"></i></button>';
                     $btn .= '<button type="button" class="btn btn-danger btn-sm deleteButton" data-id="' . $urlSafeId . '" title="Delete Data"><i class="fas fa-trash"></i></button>';
@@ -104,7 +98,7 @@ class SalesController extends BaseController
     public function store()
     {
         $rules = [
-            'client' => 'required|is_unique[sales.id_client,active,0]',
+            'client' => 'required',
             'employee' => 'required',
             'item' => 'required',
             'order_date' => 'required',
@@ -117,6 +111,13 @@ class SalesController extends BaseController
             $errors = $this->validator->getErrors();
             $errors = implode(',', $errors);
             return redirect()->to(site_url('sales'))->with('errors', $errors);
+        }
+
+        $checkClient = new SalesModel();
+        $checkClient->select('id_client')->where('id_client', $this->request->getPost('client'))->where('active', 1);
+        $checkClient = $checkClient->first();
+        if ($checkClient) {
+            return redirect()->to(site_url('sales'))->with('errors', 'Client ID / Sales already exists');
         }
 
         $employee = new EmployeeModel();
@@ -151,8 +152,9 @@ class SalesController extends BaseController
         return redirect()->to(site_url('sales'))->with('success', 'Data has been saved');
     }
 
-    public function edit($urlSafeId)
+    public function edit()
     {
+        $urlSafeId = $this->request->getGet('id');
         $base64Id = strtr($urlSafeId, '-_=', '+/?');
         $decodedId = base64_decode($base64Id);
 
@@ -163,16 +165,21 @@ class SalesController extends BaseController
         }
 
         $model = new SalesModel();
-        $data = $model->select('id_client, id_employee, id_item, order_date, client_name, client_email, client_phone')->where('id', $id)->where('active', 1)->first();
+        $data = $model->select('id_client, order_date, client_name, client_email, client_phone')->where('id', $id)->first();
 
         if (!$data) {
             return $this->response->setJSON(['error' => 'Data not found']);
         }
 
+        $id_employee = $model->select('id_employee')->where('id', $id)->first();
+        $id_item = $model->select('id_item')->where('id', $id)->first();
+
         $employee = new EmployeeModel();
-        $data['employee'] = $employee->select('number')->where('id', $data['id_employee'])->where('active', 1)->first();
+        $data['employee'] = $employee->select('name')->where('id', $id_employee)->first();
         $item = new ItemModel();
-        $data['item'] = $item->select('name, price')->where('id', $data['id_item'])->where('active', 1)->first();
+        $data['item'] = $item->select('name, price')->where('id', $id_item)->first();
+
+        $data = mb_convert_encoding($data, 'UTF-8', 'UTF-8');
 
         return $this->response->setJSON($data);
     }
@@ -189,9 +196,7 @@ class SalesController extends BaseController
         }
 
         $rules = [
-            'client' => 'required|is_unique[sales.id_client,id,' . $id . ']',
-            'employee' => 'required',
-            'item' => 'required',
+            'client' => 'required',
             'order_date' => 'required',
             'client_name' => 'required',
             'client_email' => 'required',
@@ -204,24 +209,15 @@ class SalesController extends BaseController
             return redirect()->to(site_url('sales'))->with('errors', $errors);
         }
 
-        $employee = new EmployeeModel();
-        $employee->select('id')->where('number', $this->request->getPost('employee'))->where('active', 1);
-        $employee = $employee->first();
-        if (!$employee) {
-            return redirect()->to(site_url('sales'))->with('errors', 'Employee not found');
-        }
-
-        $item = new ItemModel();
-        $item->select('id')->where('name', $this->request->getPost('item'))->where('active', 1);
-        $item = $item->first();
-        if (!$item) {
-            return redirect()->to(site_url('sales'))->with('errors', 'Item not found');
+        $checkClient = new SalesModel();
+        $checkClient->select('id_client')->where('id_client', $this->request->getPost('client'))->where('id !=', $id)->where('active', 1);
+        $checkClient = $checkClient->first();
+        if ($checkClient) {
+            return redirect()->to(site_url('sales'))->with('errors', 'Client ID already exists');
         }
 
         $data = [
             'id_client' => $this->request->getPost('client'),
-            'id_employee' => $employee,
-            'id_item' => $item,
             'order_date' => $this->request->getPost('order_date'),
             'client_name' => $this->request->getPost('client_name'),
             'client_email' => $this->request->getPost('client_email'),

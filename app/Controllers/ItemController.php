@@ -49,7 +49,7 @@ class ItemController extends BaseController
     public function store()
     {
         $rules = [
-            'name' => 'required|is_unique[items.name,active,0]',
+            'name' => 'required',
             'price' => 'required'
         ];
 
@@ -57,6 +57,14 @@ class ItemController extends BaseController
             $errors = $this->validator->getErrors();
             $errors = implode(',', $errors);
             return redirect()->to(site_url('item'))->with('errors', $errors);
+        }
+
+        $chekName = new ItemModel();
+        $chekName->select('name')->where('name', $this->request->getPost('name'))->where('active', 1);
+        $chekName = $chekName->first();
+
+        if ($chekName) {
+            return redirect()->to(site_url('item'))->with('errors', 'Item already exists');
         }
 
         $price = str_replace('.', '', $this->request->getPost('price'));
@@ -86,7 +94,7 @@ class ItemController extends BaseController
         }
 
         $rules = [
-            'name' => 'required|is_unique[items.name,id,' . $id . ']',
+            'name' => 'required',
             'price' => 'required'
         ];
 
@@ -94,6 +102,14 @@ class ItemController extends BaseController
             $errors = $this->validator->getErrors();
             $errors = implode(',', $errors);
             return redirect()->to(site_url('item'))->with('errors', $errors);
+        }
+
+        $chekName = new ItemModel();
+        $chekName->select('name')->where('name', $this->request->getPost('name'))->where('id !=', $id)->where('active', 1);
+        $chekName = $chekName->first();
+
+        if ($chekName) {
+            return redirect()->to(site_url('item'))->with('errors', 'Item name already exists');
         }
 
         $price = str_replace('.', '', $this->request->getPost('price'));
