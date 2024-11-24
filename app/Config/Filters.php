@@ -34,6 +34,16 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'session'       => \CodeIgniter\Shield\Filters\SessionAuth::class,
+        'tokens'        => \CodeIgniter\Shield\Filters\TokenAuth::class,
+        'hmac'          => \CodeIgniter\Shield\Filters\HmacAuth::class,
+        'chain'         => \CodeIgniter\Shield\Filters\ChainAuth::class,
+        'auth-rates'    => \CodeIgniter\Shield\Filters\AuthRates::class,
+        'group'         => \CodeIgniter\Shield\Filters\GroupFilter::class,
+        'permission'    => \CodeIgniter\Shield\Filters\PermissionFilter::class,
+        'force-reset'   => \CodeIgniter\Shield\Filters\ForcePasswordResetFilter::class,
+        'jwt'           => \CodeIgniter\Shield\Filters\JWTAuth::class,
+        'apikey'        => \App\Filters\ApiKeyFilter::class,
     ];
 
     /**
@@ -72,6 +82,9 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'cors',
+            'session' => ['except' => ['login*', 'register', 'auth/a/*', 'logout', 'api/sales*']],
+            'force-reset' => ['except' => ['login*', 'register', 'auth/a/*', 'logout']],
         ],
         'after' => [
             // 'honeypot',
@@ -103,5 +116,7 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'auth-rates' => ['before' => ['login*', 'register', 'auth/a/*']],
+    ];
 }
