@@ -34,7 +34,7 @@ $routes->group('sales', function ($routes) {
 });
 
 $routes->group('api', function ($routes) {
-    $routes->group('sales', function ($routes) {
+    $routes->group('sales', ['filter' => 'apikey'], function ($routes) {
         $routes->get('employee/(:segment)', 'SalesAPIController::getByEmployee/$1');
         $routes->get('employee/(:segment)/items', 'SalesAPIController::getByEmployeeAndItem/$1');
     });
@@ -44,5 +44,5 @@ $routes->group('api', function ($routes) {
         $routes->get('show', 'APIKeysController::showApiKey/$1');
     });
 
-    $routes->resource('sales', ['controller' => 'SalesAPIController']);
+    $routes->resource('sales', ['controller' => 'SalesAPIController', 'only' => ['index', 'show'], 'filter' => 'apikey']);
 });
