@@ -200,6 +200,19 @@
                     }
                 });
             });
+
+            $('.settingsButton').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Settings',
+                    text: 'This feature is not available yet.',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            });
         });
     </script>
 

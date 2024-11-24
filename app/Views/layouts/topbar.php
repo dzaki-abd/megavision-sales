@@ -24,10 +24,10 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a> -->
-                <a class="dropdown-item" href="#">
+                <button class="dropdown-item settingsButton" href="#">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
-                </a>
+                </button>
                 <div class="dropdown-divider"></div>
                 <button class="dropdown-item logoutButton">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
