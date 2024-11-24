@@ -200,7 +200,7 @@
                     }
                 });
             });
-
+          
             $('.settingsButton').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
