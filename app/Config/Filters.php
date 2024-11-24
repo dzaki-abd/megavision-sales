@@ -82,7 +82,7 @@ class Filters extends BaseFilters
             // 'csrf',
             // 'invalidchars',
             'cors',
-            'session' => ['except' => ['login*', 'register', 'auth/a/*', 'logout']],
+            'session' => ['except' => ['login*', 'register', 'auth/a/*', 'logout', 'api/*']],
             'force-reset' => ['except' => ['login*', 'register', 'auth/a/*', 'logout']],
         ],
         'after' => [

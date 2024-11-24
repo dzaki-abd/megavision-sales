@@ -35,7 +35,7 @@ $routes->group('sales', function ($routes) {
 
 $routes->group('api/sales', function ($routes) {
     $routes->get('employee/(:segment)', 'SalesAPIController::getByEmployee/$1');
-    $routes->get('employee/(:segment)/item/(:segment)', 'SalesAPIController::getByEmployeeAndItem/$1/$2');
+    $routes->get('employee/(:segment)/items', 'SalesAPIController::getByEmployeeAndItem/$1');
 });
 
 $routes->resource('api/sales', ['controller' => 'SalesAPIController']);
