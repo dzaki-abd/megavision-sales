@@ -5,6 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+service('auth')->routes($routes);
+
 $routes->get('/', 'Home::index');
 
 $routes->group('employee', function ($routes) {
@@ -31,9 +33,16 @@ $routes->group('sales', function ($routes) {
     $routes->get('delete/(:segment)', 'SalesController::delete/$1');
 });
 
-$routes->group('api/sales', function ($routes) {
-    $routes->get('employee/(:segment)', 'SalesAPIController::getByEmployee/$1');
-    $routes->get('employee/(:segment)/items', 'SalesAPIController::getByEmployeeAndItem/$1');
-});
+$routes->group('api', function ($routes) {
+    $routes->group('sales', ['filter' => 'apikey'], function ($routes) {
+        $routes->get('employee/(:segment)', 'SalesAPIController::getByEmployee/$1');
+        $routes->get('employee/(:segment)/items', 'SalesAPIController::getByEmployeeAndItem/$1');
+    });
 
-$routes->resource('api/sales', ['controller' => 'SalesAPIController']);
+    $routes->group('keys', function ($routes) {
+        $routes->post('create', 'APIKeysController::createApiKey/$1');
+        $routes->get('show', 'APIKeysController::showApiKey/$1');
+    });
+
+    $routes->resource('sales', ['controller' => 'SalesAPIController', 'only' => ['index', 'show'], 'filter' => 'apikey']);
+});

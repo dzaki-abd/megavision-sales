@@ -49,6 +49,29 @@
     </li>
 
     <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        ADDON
+    </div>
+
+    <!-- Nav Item - API -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAPI"
+            aria-expanded="true" aria-controls="collapseAPI">
+            <i class="fas fa-fw fa-paper-plane"></i>
+            <span>APIs</span></a>
+        </a>
+        <div id="collapseAPI" class="collapse" aria-labelledby="headingAPI" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item genereteAPIKeys" href="#">Generate New Key</a>
+                <a class="collapse-item seeAPIKeys" href="#">See Current Key</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->
