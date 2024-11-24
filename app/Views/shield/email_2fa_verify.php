@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label for="codeInput">Code</label>
-            <input type="number" class="form-control" name="token" id="codeInput" placeholder="000000"
+            <input type="number" class="form-control" name="token" id="codeInput"
                 inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
         </div>
 

@@ -29,7 +29,7 @@
                     Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item logoutButton" href="#">
+                <button class="dropdown-item logoutButton">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                 </button>

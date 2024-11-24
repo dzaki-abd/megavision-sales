@@ -137,6 +137,69 @@
                     }
                 });
             });
+
+            $('.genereteAPIKeys').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Generate API Key',
+                    text: 'Are you sure you want to generate a new API key?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    showLoaderOnConfirm: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '<?= site_url('api/keys/create') ?>',
+                            type: 'POST',
+                            data: {
+                                userId: '<?= auth()->id() ?>'
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.success + ' : ' + response.api_key,
+                                    allowOutsideClick: false,
+                                    confirmButtonText: 'OK',
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('.seeAPIKeys').on('click', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '<?= site_url('api/keys/show') ?>',
+                    type: 'GET',
+                    data: {
+                        userId: '<?= auth()->id() ?>'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.error,
+                                allowOutsideClick: false,
+                                confirmButtonText: 'OK',
+                            });
+                            return;
+                        }
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'API Key',
+                            text: 'Your API Key is : ' + response.api_key + ' and will expire at ' + response.expires_at,
+                            allowOutsideClick: false,
+                            confirmButtonText: 'OK',
+                        });
+                    }
+                });
+            });
         });
     </script>
 
